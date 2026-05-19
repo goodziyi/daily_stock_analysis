@@ -1,0 +1,43 @@
+name: 盘中热点资金选股
+
+on:
+  schedule:
+    # 每天周一到周五上午 11:15（早盘收盘前）自动运行 (UTC 03:15)
+    - cron: '15 3 * * 1-5'
+    # 每天周一到周五下午 14:15（尾盘决战前）自动运行 (UTC 06:15)
+    - cron: '15 6 * * 1-5'
+  workflow_dispatch: # 保留手动触发按钮
+
+jobs:
+  mid_day_analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v5
+
+      - name: 设置 Python 环境
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 安装基本依赖
+        run: |
+          pip install pandas akshare requests
+
+      - name: 运行盘中全市场扫描与 AI 邮件推送
+        env:
+          # 自动继承你之前已经配置好的所有 AI 密钥与邮件密钥
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
+          OPENAI_BASE_URL: ${{ vars.OPENAI_BASE_URL || secrets.OPENAI_BASE_URL }}
+          LITELLM_MODEL: ${{ vars.LITELLM_MODEL || secrets.LITELLM_MODEL }}
+          
+          EMAIL_SENDER: ${{ vars.EMAIL_SENDER || secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_RECEIVERS: ${{ vars.EMAIL_RECEIVERS || secrets.EMAIL_RECEIVERS }}
+          EMAIL_SENDER_NAME: ${{ vars.EMAIL_SENDER_NAME || secrets.EMAIL_SENDER_NAME }}
+        run: |
+          python panzhong_xuangu.py
