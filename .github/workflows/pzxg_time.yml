@@ -28,16 +28,12 @@ jobs:
       - name: 运行盘中全市场扫描与 AI 邮件推送
         env:
           # 自动继承你之前已经配置好的所有 AI 密钥与邮件密钥
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.BLAZE_API_KEY }}
           LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
-      
-          BLAZE_API_KEY: ${{ secrets.BLAZE_API_KEY }}
           OPENAI_BASE_URL: https://blazeai.boxu.dev/api
-          LITELLM_MODEL: ${{ vars.LITELLM_MODEL || secrets.LITELLM_MODEL }}
-          
-          EMAIL_SENDER: ${{ vars.EMAIL_SENDER || secrets.EMAIL_SENDER }}
+          LITELLM_MODEL: fast-general
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_RECEIVERS: ${{ vars.EMAIL_RECEIVERS || secrets.EMAIL_RECEIVERS }}
           EMAIL_SENDER_NAME: ${{ vars.EMAIL_SENDER_NAME || secrets.EMAIL_SENDER_NAME }}
