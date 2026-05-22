@@ -149,7 +149,7 @@ jobs:
           LLM_ANSPIRE_EXTRA_HEADERS: ${{ vars.LLM_ANSPIRE_EXTRA_HEADERS || secrets.LLM_ANSPIRE_EXTRA_HEADERS }}
 
           LLM_OPENAI_PROTOCOL: "openai"
-          LLM_OPENAI_BASE_URL: "https://blazeai.boxu.dev/api/"
+          LLM_OPENAI_BASE_URL: "https://api.blazeapi.xxx/v1"
           LLM_OPENAI_API_KEY: ${{ secrets.BLAZE_API_KEY }}
           LLM_OPENAI_MODELS: "deepseek-r1:70b"
           LLM_OPENAI_ENABLED: "true"
